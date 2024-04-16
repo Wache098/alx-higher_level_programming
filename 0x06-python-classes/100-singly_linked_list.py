@@ -1,3 +1,9 @@
+#!/usr/bin/python3
+"""
+This module defines a Square class.
+"""
+
+
 class Node:
     """
     This class represents a node of a singly linked list.
