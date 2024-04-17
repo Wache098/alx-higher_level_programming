@@ -5,7 +5,7 @@
 
 class MyList(list):
     """
-    A subclass of the built-in list class that provides additional functionality.
+    A subclass of the built-in list class that provides added functionality.
     """
 
     def print_sorted(self):
