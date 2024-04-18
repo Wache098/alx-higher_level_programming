@@ -1,35 +1,44 @@
 #!/usr/bin/python3
+"""Module containing a script that reads stdin line by line and computes,
+metrics
+Each 10 lines and after a keyboard interruption (CTRL + C), prints those,
+statistics since the beginning:
+Total file size: File size: <total size>
+where is the sum of all previous (see input format above)
+Number of lines by status code:
+possible status code: 200, 301, 400, 401, 403, 404, 405 and 500
+if a status code doesn’t appear, don’t print anything for this status code
+format: <status code>: <number>
+status codes should be printed in ascending order
+"""
+
+
 import sys
 
+def print_statistics(file_size, status_tally):
+    """Prints the computed statistics."""
+    print("File size: {:d}".format(file_size))
+    for key, value in sorted(status_tally.items()):
+        if value:
+            print("{:s}: {:d}".format(key, value))
 
-def print_stats(total_size, status_codes):
-    """Prints statistics based on the computed metrics."""
-    print("File size: {}".format(total_size))
-    for code, count in sorted(status_codes.items()):
-        print("{}: {}".format(code, count))
+file_size = 0
+status_tally = {"200": 0, "301": 0, "400": 0, "401": 0,
+                "403": 0, "404": 0, "405": 0, "500": 0}
 
+try:
+    for i, line in enumerate(sys.stdin, start=1):
+        tokens = line.split()
+        if len(tokens) >= 2 and tokens[-2] in status_tally:
+            status_tally[tokens[-2]] += 1
+        try:
+            file_size += int(tokens[-1])
+        except Exception:
+            pass
+        if i % 10 == 0:
+            print_statistics(file_size, status_tally)
 
-def compute_metrics():
-    """Reads stdin line by line and computes metrics."""
-    total_size = 0
-    status_codes = {'200': 0, '301': 0, '400': 0, '401': 0,
-            '403': 0, '404': 0, '405': 0, '500': 0}
-    count = 0
+    print_statistics(file_size, status_tally)
 
-    try:
-        for line in sys.stdin:
-            count += 1
-            parts = line.split()
-            if len(parts) > 2:
-                total_size += int(parts[-1])
-                status_code = parts[-2]
-                if status_code in status_codes:
-                    status_codes[status_code] += 1
-            if count % 10 == 0:
-                print_stats(total_size, status_codes)
-    except KeyboardInterrupt:
-        print_stats(total_size, status_codes)
-
-
-if __name__ == "__main__":
-    compute_metrics()
+except KeyboardInterrupt:
+    print_statistics(file_size, status_tally)
