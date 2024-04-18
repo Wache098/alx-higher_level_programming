@@ -15,12 +15,14 @@ status codes should be printed in ascending order
 
 import sys
 
+
 def print_statistics(file_size, status_tally):
     """Prints the computed statistics."""
     print("File size: {:d}".format(file_size))
     for key, value in sorted(status_tally.items()):
         if value:
             print("{:s}: {:d}".format(key, value))
+
 
 file_size = 0
 status_tally = {"200": 0, "301": 0, "400": 0, "401": 0,
