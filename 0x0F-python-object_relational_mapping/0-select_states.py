@@ -7,12 +7,14 @@ It takes 3 arguments: mysql username, mysql password, and database name.
 import sys
 import MySQLdb
 
+
 def list_states(username, password, dbname):
     """
     Connect to MySQL database and list all states.
     """
     # Connect to the database
-    db = MySQLdb.connect(host="localhost", port=3306, user=username, passwd=password, db=dbname)
+    db = MySQLdb.connect(host="localhost"
+           , port=3306, user=username, passwd=password, db=dbname)
     cursor = db.cursor()
 
     # Execute the query
@@ -30,6 +32,6 @@ def list_states(username, password, dbname):
     db.close()
 
 if __name__ == "__main__":
-    if len(sys.argv) == 4:
-        list_states(sys.argv[1], sys.argv[2], sys.argv[3])
 
+ if len(sys.argv) == 4:
+        list_states(sys.argv[1], sys.argv[2], sys.argv[3])
