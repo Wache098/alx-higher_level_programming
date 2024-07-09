@@ -24,8 +24,7 @@ def find_peak(list_of_integers):
 
         if (mid == 0
                 or list_of_integers[mid] >= list_of_integers[mid - 1]) and \
-           (mid == len(list_of_integers) - 1
-                   or list_of_integers[mid] >= list_of_integers[mid + 1]):
+           (mid == len(list_of_integers) - 1 or list_of_integers[mid] >= list_of_integers[mid + 1]):
             return list_of_integers[mid]
         elif mid > 0 and list_of_integers[mid] < list_of_integers[mid - 1]:
             high = mid - 1
